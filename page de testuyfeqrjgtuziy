@@ -1,0 +1,122 @@
+        <div class="form-group">
+            <label for="libellle"> Nationalité </label>
+            <select name="numNnationalite" class="form-control" >             
+                <?php  
+                $lesNationalites=Nationalite::findAll();
+                if ($mode == "Ajouter")
+                {
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        echo "<option value='" . $nationalite->getNum() . "'>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }else{
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        $selection = $auteur->getNumNationalite() == $nationalite->getNum() ? 'selected': '';
+                        echo "<option value='" . $nationalite->getNum() . "'$selection>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+
+
+
+
+
+        
+        <div class="form-group">
+            <label for="libelle"> Nationalité </label>
+            <input type="int" class="form-control" id="numNationalite" placeholder="Saisir le num de nationalite" name="numNationalite" value="">
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="form-group">
+            <label for="libelle"> Nationalité </label>
+            <select type="int" class="form-control" id="numNationalite" name="numNnationalite">             
+                <?php  
+                $lesNationalites=Nationalite::findAll();
+                if ($mode == "Ajouter")
+                {
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        echo "<option value='" . $nationalite->getNum() . "'>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }else{
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        $selection = $auteur->getNumNationalite() == $nationalite->getNum() ? 'selected': '';
+                        echo "<option value='" . $nationalite->getNum() . "'$selection>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="form-group">
+            <label for="libelle"> Nationalité </label>
+            <select type="int" class="form-control" id="numNationalite" name="numNationalite">             
+                <?php  
+                $lesNationalites=Nationalite::findAll();
+                if ($mode == "Ajouter")
+                {
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        echo "<option value='" . $nationalite->getNum() . "'>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }else{
+                    foreach($lesNationalites as $nationalite)
+                    {
+                        $selection = $auteur->getNumNationalite() == $nationalite->getNum() ? 'selected': '';
+                        echo "<option value='" . $nationalite->getNum() . "'$selection>" . $nationalite->getLibelle() . "</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        public static function findAll(?string $libelle="", ?int $leContinent=0):array 
+    {
+        if($libelle != "" || $leContinent != 0){// ){
+            if($libelle != ""){
+                $req=MonPdo::getInstance()->prepare("Select * from nationalite where libelle like '%" . $libelle . "%'");
+            }else{
+                $req=MonPdo::getInstance()->prepare("Select * from nationalite where numContinent =" . $leContinent . "");
+            }
+            
+        }else{
+
+            $req=MonPdo::getInstance()->prepare("Select * from nationalite");
+            }
+        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,'Nationalite');
+        $req->execute();
+        $LesResultats=$req->fetchAll();
+        return $LesResultats;
+    }
